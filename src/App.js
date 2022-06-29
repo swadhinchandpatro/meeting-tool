@@ -1,7 +1,12 @@
 import './App.scss';
 import { ApolloProvider, HttpLink, from, ApolloClient, InMemoryCache} from '@apollo/client'
 import { RetryLink } from '@apollo/client/link/retry'
-import SelectDropdown from './components/SelectDropdown';
+import MeetingView from './screens/MeetingView'
+import reducers from './reducers/reducer'
+import './App.scss'
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import RoomSelection from './components/RoomSelection'
 
 const errorLink = new RetryLink({
   attempts: {
@@ -16,12 +21,17 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
   link
 })
+
+const store = createStore(reducers);
 function App() {
   return (
     <ApolloProvider client={client}>
-      <div className='app-container'>
-        <SelectDropdown name='buildings' />
-      </div>
+      <Provider store={store}>
+        <div className='app-container'>
+          <MeetingView />
+          <RoomSelection />
+        </div>
+      </Provider>
     </ApolloProvider>
   );
 }

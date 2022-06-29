@@ -1,0 +1,17 @@
+.form {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    row-gap: 2em;
+}
+
+.add-meeting {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.next-btn {
+    grid-column: span 2;
+}

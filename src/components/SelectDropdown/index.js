@@ -1,23 +1,18 @@
-import { useLazyQuery, useQuery } from '@apollo/client'
-import React, { useEffect, useState } from 'react'
-import { FETCH_BUILDINGS } from '../../GraphQL/Queries'
+
+import React, { memo } from 'react'
+import { useSelector } from 'react-redux'
 
 const SelectDropdown = (props) => {
-    const { loading, data, error } = useQuery(FETCH_BUILDINGS)
-    const [buildings, setBuildings] = useState([]);
-    console.log('rerender')
-    useEffect(() => {
-        if(data && !error) {
-            console.log(data)
-            const { Buildings } = data
-            setBuildings(Buildings.map(obj => obj.name))
-        }
-    }, [data])
+    const buildings = useSelector(store => store.buildingData?.Buildings || [])
+
     return (
-        <select name={props.name}>
-            {loading ? <option>Loading</option> : buildings.map(buildingNo => <option value={buildingNo}>{buildingNo}</option>)}
+        <select name={props.name} onChange={props.setBuilding}>
+            {props.loading ? <option>Loading</option> : buildings.map(buildingNo => {
+                return props.value === buildingNo.name ? <option key={buildingNo.name} value={buildingNo.name} selected>{buildingNo.name}</option> :
+                <option key={buildingNo.name} value={buildingNo.name}>{buildingNo.name}</option>
+            })}
         </select>
     )
 }
 
-export default SelectDropdown
+export default memo(SelectDropdown)

@@ -1,0 +1,56 @@
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.305);
+}
+
+.modal-container {
+    height: 80vh;
+    max-width: 50vw;
+    margin: auto;
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+
+
+    @media screen and (max-width: 900px) {
+        max-width: 90vw;
+    }
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.meeting-rooms {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+}
+
+.rooms-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    border: 2px solid rgb(111, 4, 4);
+}
+
+.display-block {
+    padding: 2em;
+}
+
+.heading {
+    line-height: 1.5em;
+    font-weight: 800;
+}

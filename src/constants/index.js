@@ -1,0 +1,6 @@
+export const SHOW_BUILDING = 'show-building'
+export const CHOOSE_ROOM = 'choose-room'
+export const MEETING_CREATION = 'meeting-creation'
+export const FAILED = 'failed'
+export const SUCCESS = 'success'
+export const STORE_BUILDING_DATA = 'store-building-data'
