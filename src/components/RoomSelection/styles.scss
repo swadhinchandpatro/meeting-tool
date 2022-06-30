@@ -1,3 +1,5 @@
+$theme-color: rgba(33, 4, 111, 0.841);
+
 .modal {
     position: fixed;
     left: 0;
@@ -36,21 +38,59 @@
     justify-content: center;
     align-items: center;
     gap: 2em;
+
+    &::after {
+        content: '\00d7';
+        position: absolute;
+        right: 0.5em;
+        top: 0.2em;
+        font-size: 2em;
+        left: auto;
+        cursor: pointer;
+        text-align: center;
+    }
 }
 
 .rooms-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
-    border: 2px solid rgb(111, 4, 4);
+    width: 80%;
+    height: 60vh;
+    overflow-y: scroll;
+    margin: auto;
+    border: 2px solid $theme-color;
 }
 
 .display-block {
+    width: 100%;
+    border-bottom: 2px solid $theme-color;
     padding: 2em;
+    cursor: pointer;
+
+    &:hover {
+        background-color: lightblue;
+    }
 }
 
 .heading {
     line-height: 1.5em;
     font-weight: 800;
+}
+
+.save-btn {
+    width: 20em;
+    padding: 0.5em;
+    line-height: 1.2em;
+    font-weight: bold;
+    color: white;
+    background-color: $theme-color;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+
+}
+.selected {
+    background-color: lightblue;
 }

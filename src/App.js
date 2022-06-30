@@ -1,3 +1,4 @@
+import React, { Suspense } from 'react'
 import './App.scss';
 import { ApolloProvider, HttpLink, from, ApolloClient, InMemoryCache} from '@apollo/client'
 import { RetryLink } from '@apollo/client/link/retry'
@@ -6,8 +7,8 @@ import reducers from './reducers/reducer'
 import './App.scss'
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import RoomSelection from './components/RoomSelection'
 
+const RoomSelection = React.lazy(() => import('./components/RoomSelection'))
 const errorLink = new RetryLink({
   attempts: {
     max: 3
@@ -29,7 +30,9 @@ function App() {
       <Provider store={store}>
         <div className='app-container'>
           <MeetingView />
-          <RoomSelection />
+          <Suspense loading={<></>}>
+            <RoomSelection />
+          </Suspense>
         </div>
       </Provider>
     </ApolloProvider>

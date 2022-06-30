@@ -1,13 +1,19 @@
-import { CHOOSE_ROOM, FAILED, MEETING_CREATION, SHOW_BUILDING, STORE_BUILDING_DATA } from "../constants"
+import { OPEN_ROOM_SELECTION, CLOSE_ROOM_SELECTION, FAILED, MEETING_CREATION, STORE_BUILDING_DATA, SELECT_ROOM, MEETING_CREATION_STATUS } from "../constants"
 
-const INITIAL_STATE = { buildingData: {}, title: '', date: '', startTime: '', endTime: '', meetingRoomId: '', isModalOpen: false, createStatus: '' }
+const INITIAL_STATE = { buildingData: {}, title: '', date: '', startTime: '', endTime: '', meetingRoomId: '', isModalOpen: false, createStatus: '', building: '' }
 
 export default function meetingReducer (state = INITIAL_STATE, { type, payload }) {
     switch (type) {
         case STORE_BUILDING_DATA:
             return { ...state, ...payload }
-        case CHOOSE_ROOM:
+        case OPEN_ROOM_SELECTION:
             return { ...state, ...payload }
+        case SELECT_ROOM:
+            return { ...state, ...payload }
+        case CLOSE_ROOM_SELECTION:
+            return { ...state, ...payload }
+        case MEETING_CREATION_STATUS:
+            return { ...state, ...payload}
         case MEETING_CREATION:
             if (payload.status === FAILED) {
                 return { ...state, createStatus: payload.status }

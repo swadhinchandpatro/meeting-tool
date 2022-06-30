@@ -11,7 +11,12 @@ export const computeRoomsCount = (data) => {
 
 export const constructDateObj = (date, startTime, endTime) => {
     if(!date) return ['', '']
-    const [day, month, year] = date.split('/');
+    let year, month, day
+    if(date.includes('/')) {
+        [day, month, year] = date.split('/');
+    } else {
+        [year, month, day] = date.split('-');
+    }
     let startDate = new Date(`${year}-${month}-${day}T${startTime}`)
     let endDate = endTime && new Date(`${year}-${month}-${day}T${endTime}`)
 
@@ -19,17 +24,17 @@ export const constructDateObj = (date, startTime, endTime) => {
 }
 
 export const populateFloorDetails = (data, freeRooms) => {
-    if(!data?.length || !freeRooms?.length) return []
+    if(!data?.MeetingRooms?.length || !freeRooms?.length) return []
     return data?.MeetingRooms?.filter(room => {
-        return freeRooms.some(freeRoom => freeRoom.name === room.name)
+        return freeRooms.some(freeRoom => freeRoom?.name === room?.name)
     })
 }
 
 export const computeRoomsStatus = (date, toDate) => {
-    return (data) => {
+    return (data, evaluate = () => true) => {
         const freeRooms = [], busyRooms = [], meetingOnTIme = [], meetingForTheDay = [];
-        if(data && date) {
-            data?.Buildings?.forEach(building => {
+        if(Object.keys(data).length && date) {
+            data?.Buildings?.filter(evaluate).forEach(building => {
                 const meetingRooms = building.meetingRooms || [];
                 meetingRooms.forEach(room => {
                     const meetings = room.meetings || []

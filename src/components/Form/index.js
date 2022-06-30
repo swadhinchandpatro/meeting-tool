@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react'
 import { FAILED, SUCCESS } from '../../constants';
 import SelectDropdown from '../SelectDropdown';
 import { useSelector, useDispatch } from 'react-redux';
-import { chooseRoom } from '../../actions';
+import { openRoomSelection } from '../../actions';
 
 import './styles.scss'
 
@@ -16,7 +16,7 @@ const Form = (props) => {
     const dispatch = useDispatch()
 
     const openModal = () => {
-        dispatch(chooseRoom({date, startTime, endTime, building}))
+        dispatch(openRoomSelection({date, startTime, endTime, building}))
     }
 
     const onSubmit = (e) => {
@@ -26,9 +26,9 @@ const Form = (props) => {
 
     return (
         <div className='add-meeting'>
-            { createStatus === SUCCESS && <div className='notification'>Meeting Created Successfully</div> }
-            { createStatus === FAILED && <div className='notification'>Meeting Creation Failed</div> }
             <form className='form' onSubmit={onSubmit}>
+                { createStatus === SUCCESS && <div className='success'>Meeting Created Successfully</div> }
+                { createStatus === FAILED && <div className='notification'>Meeting Creation Failed</div> }
                 <label htmlFor="date">Date</label>
                 <input name="date" type="date" value={date} onChange={e => setDate(e.target.value)} id="date" required pattern="\d{2}-\d{2}-\d{4}"/>
                 <label htmlFor="start-time">Start Time</label>

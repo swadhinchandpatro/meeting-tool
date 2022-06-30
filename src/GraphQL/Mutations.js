@@ -1,6 +1,6 @@
 import {gql} from '@apollo/client'
 
-const CREATE_MEETING = gql`
+export const CREATE_MEETING = gql`
     mutation Meeting(
         $id: Int!
         $title: String!
