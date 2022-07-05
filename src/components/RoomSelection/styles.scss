@@ -1,4 +1,4 @@
-$theme-color: rgba(33, 4, 111, 0.841);
+@import '../styles/variables.scss';
 
 .modal {
     position: fixed;
@@ -10,7 +10,7 @@ $theme-color: rgba(33, 4, 111, 0.841);
 }
 
 .modal-container {
-    height: 80vh;
+    min-height: 80vh;
     max-width: 50vw;
     margin: auto;
     background-color: white;
@@ -39,6 +39,9 @@ $theme-color: rgba(33, 4, 111, 0.841);
     align-items: center;
     gap: 2em;
 
+}
+
+.modal-action {
     &::after {
         content: '\00d7';
         position: absolute;
@@ -48,6 +51,7 @@ $theme-color: rgba(33, 4, 111, 0.841);
         left: auto;
         cursor: pointer;
         text-align: center;
+        color: $theme-color;
     }
 }
 
@@ -60,12 +64,17 @@ $theme-color: rgba(33, 4, 111, 0.841);
     height: 60vh;
     overflow-y: scroll;
     margin: auto;
-    border: 2px solid $theme-color;
+    border: 1px solid $theme-color;
+    scrollbar-width: none; 
+
+    &::-webkit-scrollbar { 
+        display: none;  /* Safari and Chrome */
+    }
 }
 
 .display-block {
     width: 100%;
-    border-bottom: 2px solid $theme-color;
+    border-bottom: 1px solid $theme-color;
     padding: 2em;
     cursor: pointer;
 
@@ -88,9 +97,15 @@ $theme-color: rgba(33, 4, 111, 0.841);
     background-color: $theme-color;
     border-radius: 5px;
     text-align: center;
+    margin-bottom: 1em;
     cursor: pointer;
 
 }
 .selected {
     background-color: lightblue;
+}
+
+.disabled {
+    pointer-events: none;
+    background-color: $disabled-color;
 }

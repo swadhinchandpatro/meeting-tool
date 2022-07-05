@@ -8,6 +8,7 @@ import './styles.scss'
 
 const Form = (props) => {
     const createStatus = useSelector(store => store.createStatus);
+    const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
@@ -16,7 +17,7 @@ const Form = (props) => {
     const dispatch = useDispatch()
 
     const openModal = () => {
-        dispatch(openRoomSelection({date, startTime, endTime, building}))
+        dispatch(openRoomSelection({title, date, startTime, endTime, building}))
     }
 
     const onSubmit = (e) => {
@@ -29,6 +30,8 @@ const Form = (props) => {
             <form className='form' onSubmit={onSubmit}>
                 { createStatus === SUCCESS && <div className='success'>Meeting Created Successfully</div> }
                 { createStatus === FAILED && <div className='notification'>Meeting Creation Failed</div> }
+                <label htmlFor="title">Title</label>
+                <input name="title" type="text" value={title} onChange={e => setTitle(e.target.value)} id="title" required/>
                 <label htmlFor="date">Date</label>
                 <input name="date" type="date" value={date} onChange={e => setDate(e.target.value)} id="date" required pattern="\d{2}-\d{2}-\d{4}"/>
                 <label htmlFor="start-time">Start Time</label>

@@ -1,13 +1,25 @@
+@import '../styles/variables.scss';
+
 .meeting-summary {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border: 1px solid $theme-color;
+    box-shadow: $shadow-color 0px 7px 29px 0px;
+}
+
+.summary-block {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    border: 2px solid rgb(111, 4, 4);
+    width: 100%;
+    padding: $content-padding;
 }
 
-.display-block {
-    padding: 2em;
+.summary-block:not(:last-child)  {
+    border-bottom: 1px solid $theme-color;
 }
 
 .heading {

@@ -20,6 +20,7 @@ export const FETCH_BUILDINGS = gql`
 export const FETCH_MEETING_ROOMS = gql`
     query {
         MeetingRooms {
+            id
             name
             floor
             building{

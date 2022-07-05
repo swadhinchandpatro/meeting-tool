@@ -7,10 +7,17 @@ export const openRoomSelection = (data) => {
     }
 }
 
-export const selectRoom = (roomNo) => {
+export const selectRoom = (roomId) => {
     return {
         type: SELECT_ROOM,
-        payload: {meetingRoomId: roomNo}
+        payload: {meetingRoomId: roomId}
+    }
+}
+
+export const unSelectRoom = (roomId) => {
+    return {
+        type: SELECT_ROOM,
+        payload: {meetingRoomId: ''}
     }
 }
 

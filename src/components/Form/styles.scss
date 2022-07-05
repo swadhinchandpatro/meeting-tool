@@ -1,3 +1,5 @@
+@import '../styles/variables.scss';
+
 .form {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -10,10 +12,18 @@
     align-items: center;
     flex-direction: column;
     gap: 2em;
+    border: 1px solid $theme-color;
+    box-shadow: $shadow-color 0px 7px 29px 0px;
+    padding: $content-padding;
 }
 
 .next-btn {
     grid-column: span 2;
+    background-color: $theme-color;
+    line-height: 1.3em;
+    padding: 5px;
+    border-radius: 5px;
+    color: white
 }
 
 .notification {

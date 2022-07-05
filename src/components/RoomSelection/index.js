@@ -1,20 +1,19 @@
-import { useMutation, useQuery } from '@apollo/client'
-import React, { useEffect, useId, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux/es/exports'
-import { selectRoom, updateMeetingCreationStatus } from '../../actions'
+import { closeRoomSelection, selectRoom, unSelectRoom, updateMeetingCreationStatus } from '../../actions'
 import { computeRoomsStatus, constructDateObj, populateFloorDetails } from '../../controllers'
 import { FETCH_MEETING_ROOMS } from '../../GraphQL/Queries'
 import { CREATE_MEETING } from '../../GraphQL/Mutations'
-import { isEmpty, uniqueId } from 'lodash'
-import { v4 } from 'uuid'
-
+import { isEmpty } from 'lodash'
 import './styles.scss'
 import { FAILED, SUCCESS } from '../../constants'
+import { useTokenWithMutation, useTokenWithQuery } from '../../controllers/api'
+import { v4 } from 'uuid'
 
 export default function RoomSelection() {
-    const { loading: loadingRooms, data: roomsData, error } = useQuery(FETCH_MEETING_ROOMS)
+    const { loading: loadingRooms, data: roomsData, error } = useTokenWithQuery(FETCH_MEETING_ROOMS)
 
-    const [createMeeting, {loading: createLoading, error: createError, data: createData}] = useMutation(CREATE_MEETING)
+    const [createMeeting, {loading: createLoading, error: createError, data: createData}] = useTokenWithMutation(CREATE_MEETING)
     
     const { isModalOpen, buildingData, title, date, startTime, endTime, meetingRoomId, building} = useSelector(store => {
         const { createStatus, ...rest} = store;
@@ -27,13 +26,14 @@ export default function RoomSelection() {
     useEffect(() => {
         if(createError) {
             dispatch(updateMeetingCreationStatus(FAILED))
+            console.log(createError)
         } else if(createData) {
             dispatch(updateMeetingCreationStatus(SUCCESS))
         }
     }, [createData, createError])
 
     const callSubmitMeeting = () => {
-        createMeeting({variables: { title, date, startTime, endTime, meetingRoomId}})
+        createMeeting({variables: { id: v4(), title, date, startTime, endTime, meetingRoomId}})
     }
 
     const [freeRoomsWithFloor, setFreeRoomsWithFloor] = useState([]);
@@ -51,6 +51,7 @@ export default function RoomSelection() {
         <div className='modal'>
             <div className='modal-container'>
                 <div className='meeting-rooms'>
+                    <div className='modal-action' onClick={() => dispatch(closeRoomSelection())}></div>
                     <div className='heading'>
                         Please select one of the Free Rooms
                     </div>
@@ -58,9 +59,16 @@ export default function RoomSelection() {
                     {!loadingRooms && 
                         <div className='rooms-container'>
                             {freeRoomsWithFloor.map(room => {
-                                const className = room.name === meetingRoomId ? 'display-block selected' : 'display-block'
+                                const className = room.id === meetingRoomId ? 'display-block selected' : 'display-block'
                                 return (
-                                <div key={room.name} onClick={(e) => { dispatch(selectRoom(room.name))} } className={className}>
+                                <div key={room.name}
+                                    onClick={(e) => {
+                                        if(room.id !== meetingRoomId) {
+                                            dispatch(selectRoom(room.id))
+                                        } else {
+                                            dispatch(unSelectRoom(room.id))
+                                        }
+                                    }} className={className}>
                                     <div className='heading'>{room.name}</div> 
                                     <div>{room.building?.name}</div>
                                     <div>Floor {room.floor}</div>
@@ -69,7 +77,7 @@ export default function RoomSelection() {
                             })}
                         </div>
                     }
-                    <button disabled={createLoading} onClick={callSubmitMeeting} className='save-btn'>
+                    <button disabled={createLoading} onClick={callSubmitMeeting} className={createLoading || !meetingRoomId ? 'disabled save-btn' : 'save-btn' }>
                         { createLoading ? 'Loading...' : 'Save' }
                     </button>
                 </div>
