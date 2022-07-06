@@ -31,7 +31,7 @@ export const populateFloorDetails = (data, freeRooms) => {
 }
 
 export const computeRoomsStatus = (date, toDate) => {
-    return (data, evaluate = () => true) => {
+    return (data = {}, evaluate = () => true) => {
         const freeRooms = [], busyRooms = [], meetingOnTIme = [], meetingForTheDay = [];
         if(Object.keys(data).length && date) {
             data?.Buildings?.filter(evaluate).forEach(building => {
@@ -40,7 +40,7 @@ export const computeRoomsStatus = (date, toDate) => {
                     const meetings = room.meetings || []
                     const isFree = meetings.every(meeting => {
                         const [startDate, endDate] = constructDateObj(meeting.date, meeting.startTime, meeting.endTime)
-                        return toDate ? date > endDate || toDate < startDate : date > endDate || date < startDate
+                        return toDate ? date >= endDate || toDate <= startDate : date >= endDate || date <= startDate
                     })
                     if(isFree) {
                         freeRooms.push(room)
@@ -50,9 +50,9 @@ export const computeRoomsStatus = (date, toDate) => {
     
                     const onGoingMeeting = meetings.filter(meeting => {
                         const [startDate, endDate] = constructDateObj(meeting.date, meeting.startTime, meeting.endTime)
-                        return date < endDate && date > startDate
+                        return date <= endDate && date >= startDate
                     })
-                    meetingOnTIme.concat(onGoingMeeting);
+                    meetingOnTIme.push(...onGoingMeeting);
     
                     meetings.forEach(meeting => {
                         const [startDate] = constructDateObj(meeting.date, meeting.startTime)

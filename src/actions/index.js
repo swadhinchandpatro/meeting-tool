@@ -17,7 +17,7 @@ export const selectRoom = (roomId) => {
 export const unSelectRoom = (roomId) => {
     return {
         type: SELECT_ROOM,
-        payload: {meetingRoomId: ''}
+        payload: {meetingRoomId: -1}
     }
 }
 
@@ -38,6 +38,6 @@ export const storeBuildingData = (data) => {
 export const updateMeetingCreationStatus = (status) => {
     return {
         type: MEETING_CREATION_STATUS,
-        payload: { createStatus: status, isModalOpen: false, meetingRoomId: ''}
+        payload: { status, isModalOpen: false}
     }
 }

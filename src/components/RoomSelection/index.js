@@ -8,7 +8,7 @@ import { isEmpty } from 'lodash'
 import './styles.scss'
 import { FAILED, SUCCESS } from '../../constants'
 import { useTokenWithMutation, useTokenWithQuery } from '../../controllers/api'
-import { v4 } from 'uuid'
+import { getRandomNumber } from '../../controllers/api'
 
 export default function RoomSelection() {
     const { loading: loadingRooms, data: roomsData, error } = useTokenWithQuery(FETCH_MEETING_ROOMS)
@@ -33,7 +33,7 @@ export default function RoomSelection() {
     }, [createData, createError])
 
     const callSubmitMeeting = () => {
-        createMeeting({variables: { id: v4(), title, date, startTime, endTime, meetingRoomId}})
+        createMeeting({variables: { id: getRandomNumber(), title, date, startTime, endTime, meetingRoomId}})
     }
 
     const [freeRoomsWithFloor, setFreeRoomsWithFloor] = useState([]);
@@ -77,7 +77,7 @@ export default function RoomSelection() {
                             })}
                         </div>
                     }
-                    <button disabled={createLoading} onClick={callSubmitMeeting} className={createLoading || !meetingRoomId ? 'disabled save-btn' : 'save-btn' }>
+                    <button disabled={createLoading} onClick={callSubmitMeeting} className={createLoading || meetingRoomId === -1 ? 'disabled save-btn' : 'save-btn' }>
                         { createLoading ? 'Loading...' : 'Save' }
                     </button>
                 </div>

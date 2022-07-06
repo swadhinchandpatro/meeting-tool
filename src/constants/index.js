@@ -1,7 +1,6 @@
 export const OPEN_ROOM_SELECTION = 'choose-room'
 export const SELECT_ROOM = 'select-room'
 export const CLOSE_ROOM_SELECTION = 'close-room-selection'
-export const MEETING_CREATION = 'meeting-creation'
 export const FAILED = 'failed'
 export const SUCCESS = 'success'
 export const STORE_BUILDING_DATA = 'store-building-data'

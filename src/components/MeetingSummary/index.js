@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { memo, useMemo } from 'react'
 import { computeBuildingCount, computeRoomsCount, computeRoomsStatus } from '../../controllers'
 import './styles.scss'
 
@@ -25,4 +25,4 @@ import './styles.scss'
     )
 }
 
-export default MeetingSummary
+export default memo(MeetingSummary)
